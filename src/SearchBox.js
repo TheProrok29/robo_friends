@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 const SearchBox = ({searchField, searchChange}) => {
     return (
         <Fragment>
-            <div class='pa2'>
+            <div className='pa2'>
                 <input
                     className='pa3 ba b--green bg-lightest-blue'
                     type='search'

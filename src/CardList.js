@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import Card from './Card'
 
-const CardList = ({ robots }) => {
+const CardList = ({ robots, randomNumber }) => {
     return (
         <Fragment>
             <div>
@@ -13,6 +13,7 @@ const CardList = ({ robots }) => {
                                 id={robots[i].id}
                                 name={robots[i].name}
                                 email={robots[i].email}
+                                randomAvatar={randomNumber}
                             />
                         );
                     })

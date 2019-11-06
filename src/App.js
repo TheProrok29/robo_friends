@@ -3,19 +3,26 @@ import CardList from './CardList';
 import SearchBox from './SearchBox';
 import './App.css';
 
+
+const randomNumber = (min = 0, max = 100) => { // Random number <0-100>
+    var randX = Math.floor(Math.random() * (max - min + 1)) + min;
+    return randX;
+}
 class App extends Component {
     constructor() {
         super()
         this.state = {
             robots: [],
-            searchField: ''
+            searchField: '',
+            randomNumber: randomNumber()
         }
     }
-
     componentDidMount() {
         fetch('https://jsonplaceholder.typicode.com/users')
             .then(response => { return response.json(); })
-            .then(users => { this.setState({ robots: users }) })
+            .then(users => {
+                this.setState({ robots: users })
+            })
     }
 
     onSearchChange = (event) => {
@@ -36,7 +43,7 @@ class App extends Component {
                         <SearchBox searchChange={this.onSearchChange} />
                     </header>
                     <main className='tc'>
-                        <CardList robots={filteredRobots} />
+                        <CardList robots={filteredRobots} randomNumber={this.state.randomNumber} />
                     </main>
                 </Fragment >
             );

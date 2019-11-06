@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import CardList from './CardList';
 import SearchBox from './SearchBox';
+import Scroll from './Scroll.js'
 import './App.css';
 
 
@@ -43,7 +44,9 @@ class App extends Component {
                         <SearchBox searchChange={this.onSearchChange} />
                     </header>
                     <main className='tc'>
+                        <Scroll>
                         <CardList robots={filteredRobots} randomNumber={this.state.randomNumber} />
+                        </Scroll>
                     </main>
                 </Fragment >
             );

@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import CardList from '../components/CardList';
 import SearchBox from '../components/SearchBox';
-import Scroll from '../components/Scroll.js'
+import Scroll from '../components/Scroll.js';
+import ErrorBoundry from '../components/ErrorBoundry';
 import './App.css';
 
 
@@ -45,7 +46,9 @@ class App extends Component {
                     </header>
                     <main className='tc'>
                         <Scroll>
-                            <CardList robots={filteredRobots} randomNumber={this.state.randomNumber} />
+                            <ErrorBoundry>
+                                <CardList robots={filteredRobots} randomNumber={this.state.randomNumber} />
+                            </ErrorBoundry>
                         </Scroll>
                     </main>
                 </Fragment >

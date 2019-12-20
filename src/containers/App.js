@@ -6,47 +6,42 @@ import Scroll from '../components/Scroll.js';
 import ErrorBoundry from '../components/ErrorBoundry';
 import './App.css';
 
-import { setSearchField } from '../actions.js';
+import { setSearchField, requestRobots } from '../actions.js';
 
 const mapStateToProps = state => {
     return {
-        searchField: state.searchField
+        searchField: state.searchRobots.searchField,
+        robots: state.requestRobots.robots,
+        isPending: state.requestRobots.isPending,
+        error: state.requestRobots.error
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSearchChange: (event) => dispatch(setSearchField(event.target.value))
+        onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
+        onRequestRobots: () => dispatch(requestRobots())
     }
 }
 
-const randomNumber = (min = 0, max = 100) => { // Random number <0-100>
-    var randX = Math.floor(Math.random() * (max - min + 1)) + min;
-    return randX;
-}
 class App extends Component {
-    constructor() {
-        super()
-        this.state = {
-            robots: [],
-            randomNumber: randomNumber()
-        }
-    }
+    // constructor() {
+    //     super()
+    //     this.state = {
+    //         robots: [],
+    //         randomNumber: randomNumber()
+    //     }
+    // }
     componentDidMount() {
-        fetch('https://jsonplaceholder.typicode.com/users')
-            .then(response => { return response.json(); })
-            .then(users => {
-                this.setState({ robots: users })
-            })
+        this.props.onRequestRobots();
     }
 
     render() {
-        const { robots } = this.state;
-        const { searchField, onSearchChange } = this.props;
+        const { searchField, onSearchChange, robots, isPending } = this.props;
         const filteredRobots = robots.filter(robot => {
             return robot.name.toLowerCase().includes(searchField.toLowerCase());
         })
-        return !robots.length ?
+        return isPending ?
             <h1>Loading...</h1> :
             (
                 <Fragment>
@@ -57,7 +52,7 @@ class App extends Component {
                     <main className='tc'>
                         <Scroll>
                             <ErrorBoundry>
-                                <CardList robots={filteredRobots} randomNumber={this.state.randomNumber} />
+                                <CardList robots={filteredRobots} />
                             </ErrorBoundry>
                         </Scroll>
                     </main>
